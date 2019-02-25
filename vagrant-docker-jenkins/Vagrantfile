@@ -24,7 +24,8 @@ Vagrant.configure("2") do |config|
     # Setup and run jenkins
     sudo mkdir -p /var/jenkins_home
     sudo chown -R 1000:1000 /var/jenkins_home
-    docker run -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home -d --name jenkins jenkins/jenkins:lts
+    docker volume create jenkins_home
+    docker run -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home -d --name jenkins jenkins/jenkins:lts
     sleep 180
     docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
   SHELL
